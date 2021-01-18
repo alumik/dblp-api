@@ -22,7 +22,7 @@ Advances in Cryptography and Secure Hardware for Data Outsourcing
 
 - Output `output.csv`:
 
-| Title | Found | Year | Venue | CCF Class | DOI | URL |
+| Query | Title | Year | Venue | CCF Class | DOI | URL |
 | - | - | - | - | - | - | - |
 | Anomaly Detection in Streams with Extreme Value Theory | Anomaly Detection in Streams with Extreme Value Theory. | 2017 | KDD | A | 10.1145/3097983.3098144 | https://doi.org/10.1145/3097983.3098144 |
 | Intelligent Detection of Large-Scale KPI Streams Anomaly Based on Transfer Learning | N/A | N/A | N/A | N/A | N/A | N/A |
