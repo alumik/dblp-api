@@ -17,7 +17,8 @@ for idx, query in enumerate(queries.array):
         'Venue': 'N/A',
         'CCF Class': 'N/A',
         'DOI': 'N/A',
-        'URL': 'N/A'
+        'URL': 'N/A',
+        'BibTeX': 'N/A'
     }
     options = {
         'q': query,
@@ -33,6 +34,7 @@ for idx, query in enumerate(queries.array):
         paper_info['Venue'] = info.get('venue')
         paper_info['DOI'] = info.get('doi')
         paper_info['URL'] = info.get('ee')
+        paper_info['BibTeX'] = f'{info.get("url")}?view=bibtex'
         venue = paper_info['Venue']
         if len(series := ccf_catalog.loc[ccf_catalog.get('abbr').str.lower() == venue.lower(), 'class']) > 0:
             paper_info['CCF Class'] = series.item()
