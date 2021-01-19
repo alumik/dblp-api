@@ -6,11 +6,11 @@ A helper script to get information of scholarly articles from [DBLP](https://dbl
 
 ## Usage
 
-Simply put the keywords you want to search in `query.csv`. Each line of `query.csv` is an independent search for one article.
+Simply put the keywords you want to search in `query.txt`. Each line of `query.txt` is an independent search for one article.
 
 ### Example
 
-- Input `query.csv`:
+#### Input
 
 ```text
 Anomaly Detection in Streams with Extreme Value Theory
@@ -20,7 +20,7 @@ Robust and Unsupervised KPI Anomaly Detection Based on Conditional Variational A
 Advances in Cryptography and Secure Hardware for Data Outsourcing
 ``` 
 
-- Output `output.csv`:
+#### Output
 
 | Query | Title | Year | Venue | CCF Class | DOI | URL | BibTeX |
 | - | - | - | - | - | - | - | - |
