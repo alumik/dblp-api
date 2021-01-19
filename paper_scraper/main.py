@@ -5,11 +5,12 @@ from urllib.parse import urlencode
 
 DBLP_API = 'http://dblp.org/search/publ/api'
 
-ccf_catalog = pd.read_csv('ccf_catalog.csv')
-queries = pd.read_csv('query.csv', header=None)[0]
 paper_info_list = []
+ccf_catalog = pd.read_csv('data/ccf_catalog.csv')
+with open('query.txt', 'r') as f:
+    queries = f.read().splitlines()
 
-for idx, query in enumerate(queries.array):
+for idx, query in enumerate(queries):
     paper_info = {
         'Query': query,
         'Title': 'N/A',
