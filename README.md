@@ -15,7 +15,9 @@ queries = [...]
 results = dblp.search(queries, verbose=1)
 ```
 
-## Example
+## Examples
+
+### Get Search Results
 
 ```python
 import dblp
