@@ -1,6 +1,6 @@
 # DBLP API
 
-[![license-MIT](https://img.shields.io/badge/license-MIT-green)](https://github.com/AlumiK/paper-scraper/blob/main/LICENSE)
+[![license-MIT](https://img.shields.io/badge/license-MIT-green)](https://github.com/AlumiK/dblp-api/blob/main/LICENSE)
 
 A helper package to get information of scholarly articles from [DBLP](https://dblp.uni-trier.de/) using its public API.
 
