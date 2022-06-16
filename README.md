@@ -7,12 +7,15 @@ A helper package to get information of scholarly articles from [DBLP](https://db
 ## Usage
 
 ```python
+import json
 import dblp
 
-queries = [...]
+from typing import *
+
+queries: Sequence[str] = [...]
 
 # verbose > 0: Print out search results for each query.
-results = dblp.search(queries, verbose=1)
+results = dblp.search(queries, verbose=1, formatter=lambda x: json.dumps(x, indent=2))
 ```
 
 ## Examples
@@ -30,7 +33,7 @@ queries = [
     'Advances in Cryptography and Secure Hardware for Data Outsourcing',
 ]
 
-results = dblp.search(queries)
+results = dblp.search(queries, plain=True)
 ```
 
 The results will be:
@@ -38,66 +41,54 @@ The results will be:
 ```python
 [
     {
-        'Query': 'Anomaly Detection in Streams with Extreme Value Theory',
-        'Title': 'Anomaly Detection in Streams with Extreme Value Theory.',
-        'Year': '2017',
-        'Venue': 'KDD',
-        'CCF Class': 'A',
-        'DOI': '10.1145/3097983.3098144',
-        'URL': 'https://doi.org/10.1145/3097983.3098144',
-        'BibTeX': 'https://dblp.org/rec/conf/kdd/SifferFTL17?view=bibtex'
+        "query": "Anomaly Detection in Streams with Extreme Value Theory",
+        "title": "Anomaly Detection in Streams with Extreme Value Theory.",
+        "year": "2017",
+        "venue": "KDD",
+        "ccf_class": "A",
+        "doi": "10.1145/3097983.3098144",
+        "url": "https://doi.org/10.1145/3097983.3098144",
+        "bibtex": "https://dblp.org/rec/conf/kdd/SifferFTL17?view=bibtex"
     },
     {
-        'Query': 'Intelligent Detection of Large-Scale KPI Streams Anomaly Based on Transfer Learning',
-        'Title': 'N/A',
-        'Year': 'N/A',
-        'Venue': 'N/A',
-        'CCF Class': 'N/A',
-        'DOI': 'N/A',
-        'URL': 'N/A',
-        'BibTeX': 'N/A'
+        "query": "Intelligent Detection of Large-Scale KPI Streams Anomaly Based on Transfer Learning",
+        "title": "Intelligent Detection of Large-Scale KPI Streams Anomaly Based on Transfer Learning.",
+        "year": "2019",
+        "venue": "Big Data",
+        "ccf_class": null,
+        "doi": "10.1007/978-981-15-1899-7_26",
+        "url": "https://doi.org/10.1007/978-981-15-1899-7_26",
+        "bibtex": "https://dblp.org/rec/conf/bdccf/DuanCX19?view=bibtex"
     },
     {
-        'Query': 'Unsupervised Anomaly Detection via Variational Auto-Encoder for Seasonal KPIs in Web Applications',
-        'Title': 'Unsupervised Anomaly Detection via Variational Auto-Encoder for Seasonal KPIs in Web Applications.',
-        'Year': '2018',
-        'Venue': 'WWW',
-        'CCF Class': 'A',
-        'DOI': '10.1145/3178876.3185996',
-        'URL': 'https://doi.org/10.1145/3178876.3185996',
-        'BibTeX': 'https://dblp.org/rec/conf/www/XuCZLBLLZPFCWQ18?view=bibtex'
+        "query": "Unsupervised Anomaly Detection via Variational Auto-Encoder for Seasonal KPIs in Web Applications",
+        "title": "Unsupervised Anomaly Detection via Variational Auto-Encoder for Seasonal KPIs in Web Applications.",
+        "year": "2018",
+        "venue": "WWW",
+        "ccf_class": "A",
+        "doi": "10.1145/3178876.3185996",
+        "url": "https://doi.org/10.1145/3178876.3185996",
+        "bibtex": "https://dblp.org/rec/conf/www/XuCZLBLLZPFCWQ18?view=bibtex"
     },
     {
-        'Query': 'Robust and Unsupervised KPI Anomaly Detection Based on Conditional Variational Autoencoder',
-        'Title': 'Robust and Unsupervised KPI Anomaly Detection Based on Conditional Variational Autoencoder.',
-        'Year': '2018',
-        'Venue': 'IPCCC',
-        'CCF Class': 'C',
-        'DOI': '10.1109/PCCC.2018.8710885',
-        'URL': 'https://doi.org/10.1109/PCCC.2018.8710885',
-        'BibTeX': 'https://dblp.org/rec/conf/ipccc/LiCP18?view=bibtex'
+        "query": "Robust and Unsupervised KPI Anomaly Detection Based on Conditional Variational Autoencoder",
+        "title": "Robust and Unsupervised KPI Anomaly Detection Based on Conditional Variational Autoencoder.",
+        "year": "2018",
+        "venue": "IPCCC",
+        "ccf_class": "C",
+        "doi": "10.1109/PCCC.2018.8710885",
+        "url": "https://doi.org/10.1109/PCCC.2018.8710885",
+        "bibtex": "https://dblp.org/rec/conf/ipccc/LiCP18?view=bibtex"
     },
     {
-        'Query': 'Advances in Cryptography and Secure Hardware for Data Outsourcing',
-        'Title': 'Advances in Cryptography and Secure Hardware for Data Outsourcing.',
-        'Year': '2020',
-        'Venue': 'ICDE',
-        'CCF Class': 'A',
-        'DOI': '10.1109/ICDE48307.2020.00173',
-        'URL': 'https://doi.org/10.1109/ICDE48307.2020.00173',
-        'BibTeX': 'https://dblp.org/rec/conf/icde/0001BM20?view=bibtex'
-    },
+        "query": "Advances in Cryptography and Secure Hardware for Data Outsourcing",
+        "title": "Advances in Cryptography and Secure Hardware for Data Outsourcing.",
+        "year": "2020",
+        "venue": "ICDE",
+        "ccf_class": "A",
+        "doi": "10.1109/ICDE48307.2020.00173",
+        "url": "https://doi.org/10.1109/ICDE48307.2020.00173",
+        "bibtex": "https://dblp.org/rec/conf/icde/0001BM20?view=bibtex"
+    }
 ]
 ```
-
-### Output in CSV Format
-
-The sample code can be found at `sample/main.py`.
-
-| Query | Title | Year | Venue | CCF Class | DOI | URL | BibTeX |
-| - | - | - | - | - | - | - | - |
-| Anomaly Detection in Streams with Extreme Value Theory | Anomaly Detection in Streams with Extreme Value Theory. | 2017 | KDD | A | 10.1145/3097983.3098144 | https://doi.org/10.1145/3097983.3098144 | https://dblp.org/rec/conf/kdd/SifferFTL17?view=bibtex |
-| Intelligent Detection of Large-Scale KPI Streams Anomaly Based on Transfer Learning | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
-| Unsupervised Anomaly Detection via Variational Auto-Encoder for Seasonal KPIs in Web Applications | Unsupervised Anomaly Detection via Variational Auto-Encoder for Seasonal KPIs in Web Applications. | 2018 | WWW | A | 10.1145/3178876.3185996 | https://doi.org/10.1145/3178876.3185996 | https://dblp.org/rec/conf/www/XuCZLBLLZPFCWQ18?view=bibtex |
-| Robust and Unsupervised KPI Anomaly Detection Based on Conditional Variational Autoencoder | Robust and Unsupervised KPI Anomaly Detection Based on Conditional Variational Autoencoder. | 2018 | IPCCC | C | 10.1109/PCCC.2018.8710885 | https://doi.org/10.1109/PCCC.2018.8710885 | https://dblp.org/rec/conf/ipccc/LiCP18?view=bibtex |
-| Advances in Cryptography and Secure Hardware for Data Outsourcing | Advances in Cryptography and Secure Hardware for Data Outsourcing. | 2020 | ICDE | A | 10.1109/ICDE48307.2020.00173 | https://doi.org/10.1109/ICDE48307.2020.00173 | https://dblp.org/rec/conf/icde/0001BM20?view=bibtex |
