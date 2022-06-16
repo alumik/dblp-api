@@ -17,9 +17,7 @@ def _ccf_class(venue: Optional[str]) -> Optional[str]:
 
 
 def search(queries: Sequence[str],
-           verbose: int = 0,
            plain: bool = False,
-           formatter: Optional[Callable[Dict[str, Any], str]] = None,
            **kwargs) -> Union[Sequence[Dict[str, Any]], pd.DataFrame]:
     url = 'https://dblp.org/search/publ/api'
     results = []
@@ -51,11 +49,6 @@ def search(queries: Sequence[str],
             entry['url'] = info.get('ee')
             entry['bibtex'] = f'{info.get("url")}?view=bibtex'
         results.append(entry)
-        if verbose > 0:
-            if formatter is not None:
-                print(formatter(entry))
-            else:
-                print(entry)
     if not plain:
         results = pd.DataFrame(results, **kwargs)
     return results

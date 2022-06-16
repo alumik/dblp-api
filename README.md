@@ -14,8 +14,7 @@ from typing import *
 
 queries: Sequence[str] = [...]
 
-# verbose > 0: Print out search results for each query.
-results = dblp.search(queries, verbose=1, formatter=lambda x: json.dumps(x, indent=2))
+results = dblp.search(queries)
 ```
 
 ## Examples
