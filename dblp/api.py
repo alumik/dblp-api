@@ -1,25 +1,28 @@
 import requests
 import pandas as pd
 
-from typing import *
 from urllib.parse import urlencode
 from importlib.resources import open_binary
 
+BASE_URL = 'https://dblp.org/search/publ/api'
 
-def _ccf_class(venue: Optional[str]) -> Optional[str]:
+
+def _get_ccf_class(venue: str | None, catalog: pd.DataFrame) -> str | None:
     if venue is None:
         return
-    ccf = pd.read_csv(open_binary('dblp.data', 'ccf_catalog.csv'))
-    if len(series := ccf.loc[ccf.get('abbr').str.lower() == venue.lower(), 'class']) > 0:
+    if len(series := catalog.loc[catalog.get('abbr').str.lower() == venue.lower(), 'class']) > 0:
         return series.item()
-    elif len(series := ccf.loc[ccf.get('url').str.contains(f'/{venue.lower()}/'), 'class']) > 0:
+    elif len(series := catalog.loc[catalog.get('url').str.contains(f'/{venue.lower()}/'), 'class']) > 0:
         return series.item()
 
 
-def search(queries: Sequence[str],
-           plain: bool = False,
-           **kwargs) -> Union[Sequence[Dict[str, Any]], pd.DataFrame]:
-    url = 'https://dblp.org/search/publ/api'
+def add_ccf_class(results: pd.DataFrame) -> pd.DataFrame:
+    catalog = pd.read_csv(open_binary('dblp.data', 'ccf_catalog.csv'))
+    results['ccf_class'] = results.get('venue').apply(_get_ccf_class, catalog=catalog)
+    return results
+
+
+def search(queries: list[str], **kwargs) -> pd.DataFrame:
     results = []
     for query in queries:
         entry = {
@@ -27,7 +30,6 @@ def search(queries: Sequence[str],
             'title': None,
             'year': None,
             'venue': None,
-            'ccf_class': None,
             'doi': None,
             'url': None,
             'bibtex': None,
@@ -37,18 +39,16 @@ def search(queries: Sequence[str],
             'format': 'json',
             'h': 1
         }
-        r = requests.get(f'{url}?{urlencode(options)}').json()
+        r = requests.get(f'{BASE_URL}?{urlencode(options)}').json()
         hit = r.get('result').get('hits').get('hit')
         if hit is not None:
             info = hit[0].get('info')
             entry['title'] = info.get('title')
             entry['year'] = info.get('year')
             entry['venue'] = info.get('venue')
-            entry['ccf_class'] = _ccf_class(entry.get('venue'))
             entry['doi'] = info.get('doi')
             entry['url'] = info.get('ee')
             entry['bibtex'] = f'{info.get("url")}?view=bibtex'
         results.append(entry)
-    if not plain:
-        results = pd.DataFrame(results, **kwargs)
+    results = pd.DataFrame(results, **kwargs)
     return results

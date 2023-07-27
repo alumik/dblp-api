@@ -4,10 +4,12 @@ import pandas as pd
 import dblp
 
 
-def main(file: str = 'query.txt'):
-    with open(file, 'r') as f:
+def main(input: str, with_ccf_class: bool = False):
+    with open(input, 'r') as f:
         queries = f.read().splitlines()
     results = dblp.search(queries)
+    if with_ccf_class:
+        results = dblp.add_ccf_class(results)
     print(results)
     results.to_csv('output.csv', index=False)
 

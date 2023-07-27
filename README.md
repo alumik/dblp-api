@@ -1,20 +1,21 @@
 # DBLP API
 
-[![license-MIT](https://img.shields.io/badge/license-MIT-green)](https://github.com/AlumiK/dblp-api/blob/main/LICENSE)
+![version-0.2.0](https://img.shields.io/badge/version-0.2.0-blue)
+![python->=3.10](https://img.shields.io/badge/python->=3.10-blue?logo=python&logoColor=white)
+![license-MIT](https://img.shields.io/badge/license-MIT-green)
 
 A helper package to get information of scholarly articles from [DBLP](https://dblp.uni-trier.de/) using its public API.
 
 ## Usage
 
 ```python
-import json
 import dblp
+import pandas as pd
 
-from typing import *
+queries: list[str] = [...]
 
-queries: Sequence[str] = [...]
-
-results = dblp.search(queries)
+results: pd.DataFrame = dblp.search(queries)
+results_with_ccf_class: pd.DataFrame = dblp.add_ccf_class(results)
 ```
 
 ## Examples
@@ -32,7 +33,7 @@ queries = [
     'Advances in Cryptography and Secure Hardware for Data Outsourcing',
 ]
 
-results = dblp.search(queries, plain=True)
+results = dblp.search(queries)
 ```
 
 The results will be:
