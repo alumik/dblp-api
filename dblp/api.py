@@ -7,22 +7,22 @@ from importlib.resources import open_binary
 BASE_URL = 'https://dblp.org/search/publ/api'
 
 
-def _get_ccf_class(venue: str | None, catalog: pd.DataFrame) -> str | None:
-    if venue is None:
-        return
-    if len(series := catalog.loc[catalog.get('abbr').str.lower() == venue.lower(), 'class']) > 0:
-        return series.item()
-    elif len(series := catalog.loc[catalog.get('url').str.contains(f'/{venue.lower()}/'), 'class']) > 0:
-        return series.item()
+def add_ccf_class(results: list[dict]) -> list[dict]:
+    def get_ccf_class(venue: str | None, catalog: pd.DataFrame) -> str | None:
+        if venue is None:
+            return
+        if len(series := catalog.loc[catalog.get('abbr').str.lower() == venue.lower(), 'class']) > 0:
+            return series.item()
+        elif len(series := catalog.loc[catalog.get('url').str.contains(f'/{venue.lower()}/'), 'class']) > 0:
+            return series.item()
 
-
-def add_ccf_class(results: pd.DataFrame) -> pd.DataFrame:
     catalog = pd.read_csv(open_binary('dblp.data', 'ccf_catalog.csv'))
-    results['ccf_class'] = results.get('venue').apply(_get_ccf_class, catalog=catalog)
+    for result in results:
+        result['ccf_class'] = get_ccf_class(result.get('venue'), catalog=catalog)
     return results
 
 
-def search(queries: list[str], **kwargs) -> pd.DataFrame:
+def search(queries: list[str]) -> list[dict]:
     results = []
     for query in queries:
         entry = {
@@ -50,5 +50,4 @@ def search(queries: list[str], **kwargs) -> pd.DataFrame:
             entry['url'] = info.get('ee')
             entry['bibtex'] = f'{info.get("url")}?view=bibtex'
         results.append(entry)
-    results = pd.DataFrame(results, **kwargs)
     return results
